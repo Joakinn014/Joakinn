@@ -1,12 +1,8 @@
-meme_dict = {
-            "CRINGE": "Algo excepcionalmente raro o embarazoso",
-            "LOL": "Una respuesta común a algo gracioso",
-            "DAMN": "Asombroso",
-            "POV": "Punto de vista raro"
-            }
-
-pregunta = input("Ingrese la palabra que quiera conocer: ")
-
-for palabra in meme_dict.keys():
-    if pregunta == palabra:
-        print(f"El significado de la palabra {pregunta} es {meme_dict[palabra]}")
+import random 
+carac = "+-/*!&$#?=@abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+a = int(input("Numero de caracteres: "))
+b = ""
+for i in range(a):
+    c = random.choice(carac)
+    b += c
+print(b)

@@ -1,13 +1,17 @@
 import discord
 import random
 import asyncio
+from discord.ext import commands 
+import os
+import requests
 
-TOKEN = "Tu token aquí"
+TOKEN = "Tu Token Aquí"
 
 intents = discord.Intents.default()
 intents.message_content = True #Lee y responde con mensajes
 
 client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix="/", intents=intents)
 
 class MyClient(discord.Client):
     @client.event
@@ -42,5 +46,25 @@ class MyClient(discord.Client):
                 await message.channel.send(f'Oops. Era el número {answer}.')
 
 
+@bot.command()
+async def meme(ctx):
+    img_meme = random.choice(os.listdir("images"))
+    with open(f"images/{img_meme}", "rb") as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+def get_duck_image_url():    
+    url = 'https://random-d.uk/api/random'
+    res = requests.get(url)
+    data = res.json()
+    return data['url']
+
+@bot.command('duck')
+async def duck(ctx):
+    '''Una vez que llamamos al comando duck, 
+    el programa llama a la función get_duck_image_url'''
+    image_url = get_duck_image_url()
+    await ctx.send(image_url)
+
 client = MyClient(intents=intents)
-client.run(TOKEN)#Esto siempre va de ultimo en el codigo
+bot.run(TOKEN)#Esto siempre va de ultimo en el codigo
